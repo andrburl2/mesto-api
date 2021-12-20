@@ -17,6 +17,19 @@ const validateSignin = celebrate({
   }),
 });
 
+const validateEditProfile = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2).max(30),
+  }),
+});
+
+const validateEditAvatar = celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required().uri(),
+  }),
+});
+
 const validateObjectId = celebrate({
   params: Joi.object().keys({
     articleId: Joi.string().alphanum().length(24),
@@ -39,4 +52,6 @@ module.exports = {
   validateSignup,
   validateSignin,
   validateObjectId,
+  validateEditProfile,
+  validateEditAvatar,
 };

@@ -1,17 +1,63 @@
 const User = require('../models/user');
 
-/*module.exports.getInfo = (req, res, next) => {
+module.exports.getProfile = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (user) {
-        res.send({
-          status: 200,
+        res.status(200).send({
           name: user.name,
-          email: user.email,
+          about: user.about,
+          avatar: user.avatar,
         });
       } else {
-        throw new NotFoundError('Не удается найти пользователя');
+        throw new Error('Не удается найти пользователя');
       }
     })
     .catch(next);
-};*/
+};
+
+module.exports.editProfile = (req, res, next) => {
+  const { name, about } = req.body;
+
+  User.findByIdAndUpdate(
+    req.user._id,
+    { name: name, about: about },
+    {
+      new: true,
+      runValidators: true
+    }
+  )
+    .then((user) => {
+      if (user) {
+        res.status(200).send({
+          user: user
+        });
+      } else {
+        throw new Error('Не удается найти пользователя');
+      }
+    })
+    .catch(next);
+};
+
+module.exports.editAvatar = (req, res, next) => {
+  const { avatar } = req.body;
+
+  User.findByIdAndUpdate(
+    req.user._id,
+    { avatar: avatar },
+    {
+      new: true,
+      runValidators: true
+    }
+  )
+    .then((user) => {
+      if (user) {
+        res.status(200).send({
+          user: user
+        });
+      } else {
+        throw new Error('Не удается найти пользователя');
+      }
+    })
+    .catch(next);
+};
