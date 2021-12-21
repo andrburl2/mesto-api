@@ -24,7 +24,7 @@ module.exports.singup = (req, res, next) => {
           },
         });
     })
-    .catch((err) => res.status(409).send(err));
+    .catch(next);
 };
 
 module.exports.signin = (req, res, next) => {

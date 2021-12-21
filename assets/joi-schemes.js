@@ -30,28 +30,24 @@ const validateEditAvatar = celebrate({
   }),
 });
 
-const validateObjectId = celebrate({
-  params: Joi.object().keys({
-    articleId: Joi.string().alphanum().length(24),
+const validateCard = celebrate({
+  body: Joi.object().keys({
+    title: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().uri(),
   }),
 });
 
-/*const validateCard = celebrate({
-  body: Joi.object().keys({
-    keyword: Joi.string().required(),
-    title: Joi.string().required(),
-    text: Joi.string().required(),
-    date: Joi.string().required(),
-    source: Joi.string().required(),
-    link: Joi.string().required().uri(),
-    image: Joi.string().required().uri(),
+const validateObjectId = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24),
   }),
-});*/
+});
 
 module.exports = {
   validateSignup,
   validateSignin,
-  validateObjectId,
   validateEditProfile,
   validateEditAvatar,
+  validateCard,
+  validateObjectId,
 };

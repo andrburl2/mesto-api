@@ -1,5 +1,7 @@
+const { NotFound } = require('../assets/errors');
+
 const sendError = (req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+  throw new NotFound('Такой страницы не существует');
 };
 
 module.exports = sendError;

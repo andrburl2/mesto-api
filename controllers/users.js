@@ -1,5 +1,7 @@
 const User = require('../models/user');
 
+const { NotFound } = require('../assets/errors');
+
 module.exports.getProfile = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
@@ -10,7 +12,7 @@ module.exports.getProfile = (req, res, next) => {
           avatar: user.avatar,
         });
       } else {
-        throw new Error('Не удается найти пользователя');
+        throw new NotFound('Не удается найти пользователя');
       }
     })
     .catch(next);
@@ -33,7 +35,7 @@ module.exports.editProfile = (req, res, next) => {
           user: user
         });
       } else {
-        throw new Error('Не удается найти пользователя');
+        throw new NotFound('Не удается найти пользователя');
       }
     })
     .catch(next);
@@ -56,7 +58,7 @@ module.exports.editAvatar = (req, res, next) => {
           user: user
         });
       } else {
-        throw new Error('Не удается найти пользователя');
+        throw new NotFound('Не удается найти пользователя');
       }
     })
     .catch(next);
