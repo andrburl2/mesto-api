@@ -30,6 +30,10 @@ module.exports.singup = (req, res, next) => {
 module.exports.signin = (req, res, next) => {
   const { email, password } = req.body;
 
+  if (req.cookies.jwt) {
+    return res.status(200).send({ status: 200, message: 'Вы уже вошли'})
+  }
+
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
@@ -44,15 +48,21 @@ module.exports.signin = (req, res, next) => {
         sameSite: true,
       });
 
-      res.sendStatus(200);
+      res.status(200).send({ status: 200, message: 'Успешный вход'});
     })
     .catch(next);
 };
 
 module.exports.logout = (req, res, next) => {
+  
+
+  if (!req.cookies.jwt) {
+    return res.status(200).send({ status: 200, message: 'Вы уже вышли'})
+  }
+
   res.clearCookie('jwt', {
     httpOnly: true,
   });
 
-  res.sendStatus(200);
+  res.status(200).send({ status: 200, message: 'Успешный выход'});
 };

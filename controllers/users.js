@@ -7,6 +7,7 @@ module.exports.getProfile = (req, res, next) => {
     .then((user) => {
       if (user) {
         res.status(200).send({
+          _id: user._id,
           name: user.name,
           about: user.about,
           avatar: user.avatar,
@@ -19,11 +20,15 @@ module.exports.getProfile = (req, res, next) => {
 };
 
 module.exports.editProfile = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, about, avatar } = req.body;
 
   User.findByIdAndUpdate(
     req.user._id,
-    { name: name, about: about },
+    {
+      name,
+      about,
+      avatar,
+    },
     {
       new: true,
       runValidators: true
@@ -32,30 +37,7 @@ module.exports.editProfile = (req, res, next) => {
     .then((user) => {
       if (user) {
         res.status(200).send({
-          user: user
-        });
-      } else {
-        throw new NotFound('Не удается найти пользователя');
-      }
-    })
-    .catch(next);
-};
-
-module.exports.editAvatar = (req, res, next) => {
-  const { avatar } = req.body;
-
-  User.findByIdAndUpdate(
-    req.user._id,
-    { avatar: avatar },
-    {
-      new: true,
-      runValidators: true
-    }
-  )
-    .then((user) => {
-      if (user) {
-        res.status(200).send({
-          user: user
+          user
         });
       } else {
         throw new NotFound('Не удается найти пользователя');
