@@ -21,8 +21,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (link) => validator.isURL(link),
-      message: 'Введите ссылку на статью',
+      validator: link => validator.isURL(link),
+      message: 'Введите корректную ссылку на картинку',
     },
   },
   email: {
@@ -30,8 +30,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: (email) => validator.isEmail(email),
-      message: 'Введите валидный email',
+      validator: email => validator.isEmail(email),
+      message: 'Введите правильный email',
     },
   },
   password: {
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     select: false,
     minlength: 8,
     validate: {
-      validator: (password) => /^\S{8,}$/.test(password),
+      validator: password => /^\S{8,}$/.test(password),
       message: 'Пароль должен состоять как минимум из 8 символов',
     },
   },

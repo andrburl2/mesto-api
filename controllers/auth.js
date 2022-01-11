@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { JWT_SECRET } = require('../assets/config');
 
-module.exports.singup = (req, res, next) => {
+module.exports.registration = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
 
   User.validate({ name, about, avatar, email, password })
@@ -15,6 +15,7 @@ module.exports.singup = (req, res, next) => {
     .then((user) => {
       res.status(201)
         .send({
+          status: 201,
           user: {
             _id: user._id,
             name: user.name,
@@ -27,7 +28,7 @@ module.exports.singup = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.signin = (req, res, next) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   if (req.cookies.jwt) {

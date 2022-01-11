@@ -1,9 +1,15 @@
 const errorHandler = (err, req, res, next) => {
   let { statusCode = 500, message } = err;
-  
-  if (err.message === 'Validation failed') {
+
+  if (err._message.toLowerCase().includes('validation failed')) {
+    const regex = /[A-Za-z]+:?\s/gm;
     statusCode = 400;
-    message = 'Невалидные данные'
+    message = message.replaceAll(regex, '');
+  }
+
+  if (message === 'Validation failed') {
+    statusCode = 400;
+    message = 'Ошибка в заполнении формы';
   }
 
   if (err.name === 'MongoServerError') {
@@ -11,7 +17,10 @@ const errorHandler = (err, req, res, next) => {
     message = 'Данный email уже зарегистрирован';
   }
 
-  res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
+  res.status(statusCode).send({
+    status: statusCode,
+    message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
+  });
 };
 
 module.exports = errorHandler;

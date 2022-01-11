@@ -7,10 +7,8 @@ module.exports.getProfile = (req, res, next) => {
     .then((user) => {
       if (user) {
         res.status(200).send({
-          _id: user._id,
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
+          status: 200,
+          user,
         });
       } else {
         throw new NotFound('Не удается найти пользователя');
@@ -31,13 +29,14 @@ module.exports.editProfile = (req, res, next) => {
     },
     {
       new: true,
-      runValidators: true
+      runValidators: true,
     }
   )
     .then((user) => {
       if (user) {
         res.status(200).send({
-          user
+          status: 200,
+          user,
         });
       } else {
         throw new NotFound('Не удается найти пользователя');
