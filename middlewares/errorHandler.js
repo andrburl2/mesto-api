@@ -1,7 +1,7 @@
 const errorHandler = (err, req, res, next) => {
   let { statusCode = 500, message } = err;
 
-  if (err._message.toLowerCase().includes('validation failed')) {
+  if (err._message && err._message.toLowerCase().includes('validation failed')) {
     const regex = /[A-Za-z]+:?\s/gm;
     statusCode = 400;
     message = message.replaceAll(regex, '');
