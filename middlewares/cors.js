@@ -2,7 +2,7 @@ const router = require('express').Router();
 const cors = require('cors');
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: ['https://andrburl-mesto.ml', 'https://www.andrburl-mesto.ml'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 204,
   credentials: true,

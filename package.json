@@ -1,6 +1,6 @@
 {
   "name": "mesto_api",
-  "version": "0.2",
+  "version": "0.3.0",
   "description": "api for mesto_react",
   "main": "app.js",
   "scripts": {
