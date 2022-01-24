@@ -6,6 +6,8 @@ module.exports.getProfile = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (user) {
+        // отключаем кэширование, чтобы на клиенте постоянно проверять вошел пользователь или нет
+        res.set('Cache-control', 'no-cache, no-store, must-revalidate');
         res.status(200).send({
           status: 200,
           user,

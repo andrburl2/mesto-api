@@ -55,8 +55,6 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res, next) => {
-  
-
   if (!req.cookies.jwt) {
     return res.status(200).send({ status: 200, message: 'Вы уже вышли'})
   }
