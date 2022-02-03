@@ -31,10 +31,6 @@ module.exports.registration = (req, res, next) => {
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
-  if (req.cookies.jwt) {
-    return res.status(200).send({ status: 200, message: 'Вы уже вошли'})
-  }
-
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
@@ -55,10 +51,6 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res, next) => {
-  if (!req.cookies.jwt) {
-    return res.status(200).send({ status: 200, message: 'Вы уже вышли'})
-  }
-
   res.clearCookie('jwt', {
     httpOnly: true,
   });
