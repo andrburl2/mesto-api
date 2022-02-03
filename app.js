@@ -8,9 +8,7 @@ const cors = require('./middlewares/cors');
 
 const router = require('./routes/router');
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
-
-});
+mongoose.connect('mongodb://localhost:27017/mestodb', {});
 
 const { PORT } = process.env;
 const app = express();
@@ -20,6 +18,4 @@ app.use(cookieParser);
 app.use(cors);
 app.use('/', router);
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`)
-});
+app.listen(PORT);
